@@ -22,7 +22,7 @@ public class MapFileService
 
     public async Task MapSeparatorFileAsync(CancellationToken cancellationToken)
     {
-        const string path = "..\\..\\..\\..\\sample-separator-file.txt";
+        const string path = "..\\..\\..\\..\\.assets\\sample-separator-file.txt";
         using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
         using var reader = new StreamReader(fileStream, Encoding.UTF8);
 
@@ -45,7 +45,7 @@ public class MapFileService
 
     public async Task MapPositionsFileAsync(CancellationToken cancellationToken)
     {
-        const string path = "..\\..\\..\\..\\sample-positions-file.txt";
+        const string path = "..\\..\\..\\..\\.assets\\sample-positions-file.txt";
         using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
         using var reader = new StreamReader(fileStream, Encoding.UTF8);
 
