@@ -11,6 +11,8 @@ public class MapWithSeparatorFileService
     private readonly ColumnFileOption<string> _options;
     private readonly ReadFileService _service;
 
+    private readonly Action<string, IDictionary<string, int>?, ColumnFileOption<string>, List<UserModel>> _processLine;
+
     private const string path = "C:\\src\\github\\poc-read-dynamic-file\\.assets\\sample-separator-file.txt";
 
     public MapWithSeparatorFileService()
@@ -25,6 +27,18 @@ public class MapWithSeparatorFileService
             PaymentDate =  "PAY_DATE",
             PaymentValue =  "PAY_VALUE"
         };
+
+        _processLine = (line, headers, options, users) =>
+        {
+            if (headers is null)
+            {
+                headers = line.MapFields(options, '|');
+                return;
+            }
+
+            UserModel user = new(line.Split('|'), headers, options);
+            users.Add(user);
+        };
     }
 
     [Benchmark]
@@ -36,17 +50,7 @@ public class MapWithSeparatorFileService
 
         await _service.StreamReaderAsync(
             stream: stream,
-            proccessLine: line =>
-            {
-                if (headers is null)
-                {
-                    headers = line.MapFields(_options, '|');
-                    return;
-                }
-
-                UserModel user = new(line.Split('|'), headers, _options);
-                users.Add(user);
-            },
+            proccessLine: line => _processLine(line, headers, _options, users),
             cancellationToken: default);
     }
 
@@ -59,17 +63,7 @@ public class MapWithSeparatorFileService
 
         await _service.PipeReaderAsync(
             stream: stream,
-            proccessLine: line =>
-            {
-                if (headers is null)
-                {
-                    headers = line.MapFields(_options, '|');
-                    return;
-                }
-
-                UserModel user = new(line.Split('|'), headers, _options);
-                users.Add(user);
-            },
+            proccessLine: line => _processLine(line, headers, _options, users),,
             cancellationToken: default);
     }
 }
