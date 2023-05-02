@@ -1,24 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using poc_read_dynamic_file.Options;
+﻿using BenchmarkDotNet.Running;
 using poc_read_dynamic_file.Service;
 
-IConfigurationRoot configuration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
-    .AddJsonFile("appsettings.json", false)
-    .Build();
 
-var builder = new ServiceCollection()
-    .AddScoped<MapFileService>()
-    .AddScoped<ReadFileService>()
-    .AddOptions<ColumnFileOption<string>>()
-        .Bind(configuration.GetSection("ColumnSeparateFileOptions"))
-        .Services
-    .AddOptions<ColumnFileOption<PositionFieldOption>>()
-        .Bind(configuration.GetSection("ColumnPositionsFileOptions"))
-        .Services
-    .BuildServiceProvider();
+#if RELEASE
+//BenchmarkRunner.Run<MapWithSeparatorFileService>();
+BenchmarkRunner.Run<MapWithPositionsFileService>();
+#else
+await new MapWithSeparatorFileService().SeparatorWithStreamReaderAsync();
+await new MapWithSeparatorFileService().SeparatorWithPipeReaderAsync();
 
-var service = builder.GetRequiredService<MapFileService>();
-await service.MapSeparatorFileAsync(default);
-//await service.MapPositionsFileAsync(default);
+await new MapWithPositionsFileService().PositionsWithStreamReaderAsync();
+await new MapWithPositionsFileService().PositionsWithPipeReaderAsync();
+#endif
