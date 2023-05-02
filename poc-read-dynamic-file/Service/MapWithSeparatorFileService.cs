@@ -63,7 +63,7 @@ public class MapWithSeparatorFileService
 
         await _service.PipeReaderAsync(
             stream: stream,
-            proccessLine: line => _processLine(line, headers, _options, users),,
+            proccessLine: line => _processLine(line, headers, _options, users),
             cancellationToken: default);
     }
 }
