@@ -10,6 +10,7 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
 
 var builder = new ServiceCollection()
     .AddScoped<MapFileService>()
+    .AddScoped<ReadFileService>()
     .AddOptions<ColumnFileOption<string>>()
         .Bind(configuration.GetSection("ColumnSeparateFileOptions"))
         .Services
