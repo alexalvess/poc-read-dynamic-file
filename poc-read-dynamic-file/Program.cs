@@ -20,4 +20,4 @@ var builder = new ServiceCollection()
 
 var service = builder.GetRequiredService<MapFileService>();
 await service.MapSeparatorFileAsync(default);
-await service.MapPositionsFileAsync(default);
+//await service.MapPositionsFileAsync(default);
