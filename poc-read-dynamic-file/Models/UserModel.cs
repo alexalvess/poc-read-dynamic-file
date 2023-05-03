@@ -4,6 +4,15 @@ namespace poc_read_dynamic_file.Models;
 
 public class UserModel
 {
+    public UserModel(string name, string email, int productCode, DateTime paymentDate, decimal paymentValue)
+    {
+        Name = name;
+        Email = email;
+        ProductCode = productCode;
+        PaymentDate = paymentDate;
+        PaymentValue = paymentValue;
+    }
+
     public UserModel(string[] fields, IDictionary<string, int> headers, ColumnFileOption<string> option)
     {
         Name = fields[headers[option.Name]].Trim();
