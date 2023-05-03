@@ -3,9 +3,10 @@ using poc_read_dynamic_file.Models;
 using System.Buffers;
 using System.IO;
 using System.IO.Pipelines;
+using System.Net.Sockets;
 using System.Text;
 
-namespace poc_read_dynamic_file.Service;
+namespace poc_read_dynamic_file.Service.ReadUseCase;
 
 public class ReadFileService
 {
@@ -17,7 +18,7 @@ public class ReadFileService
         {
             var line = await reader.ReadLineAsync(cancellationToken) ?? null;
 
-            if(line is null) 
+            if (line is null)
                 break;
 
             proccessLine(line);

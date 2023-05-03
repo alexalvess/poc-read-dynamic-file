@@ -3,7 +3,7 @@ using poc_read_dynamic_file.Extensions;
 using poc_read_dynamic_file.Models;
 using poc_read_dynamic_file.Options;
 
-namespace poc_read_dynamic_file.Service;
+namespace poc_read_dynamic_file.Service.ReadUseCase;
 
 [MemoryDiagnoser]
 public class MapWithPositionsFileService
