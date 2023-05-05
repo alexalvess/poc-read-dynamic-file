@@ -11,6 +11,6 @@ public class RepositoryDatabase : IDisposable
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        _dbContext.Dispose();
     }
 }
