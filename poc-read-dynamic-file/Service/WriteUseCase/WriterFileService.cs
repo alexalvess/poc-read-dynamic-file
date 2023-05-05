@@ -15,11 +15,10 @@ public class WriterFileService : IDisposable
 {
     private const string path = "C:\\src\\github\\poc-read-dynamic-file\\.assets\\sample-writer-file-{0}-new.txt";
 
-    private readonly DbContext _dbContext;
 
     public WriterFileService()
     {
-        _dbContext = new DbContext();
+
     }
 
     [Benchmark]
