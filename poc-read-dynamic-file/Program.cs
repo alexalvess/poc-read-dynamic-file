@@ -8,7 +8,8 @@ using poc_read_dynamic_file.Service.WriteUseCase.Database;
 //BenchmarkRunner.Run<MapWithSeparatorFileService>();
 //BenchmarkRunner.Run<MapWithPositionsFileService>();
 
-BenchmarkRunner.Run<WriterFileService>();
+//BenchmarkRunner.Run<WriterFileService>();
+BenchmarkRunner.Run<RepositoryDatabase>();
 
 #else
 
