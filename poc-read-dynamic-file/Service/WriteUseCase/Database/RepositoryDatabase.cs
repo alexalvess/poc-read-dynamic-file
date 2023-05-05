@@ -2,6 +2,13 @@
 
 public class RepositoryDatabase : IDisposable
 {
+    private readonly DbContext _dbContext;
+
+    public RepositoryDatabase()
+    {
+        _dbContext= new DbContext();
+    }
+
     public void Dispose()
     {
         throw new NotImplementedException();
