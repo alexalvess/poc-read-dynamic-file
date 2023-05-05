@@ -1,10 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Dapper;
-using poc_read_dynamic_file.Models;
 using poc_read_dynamic_file.Service.WriteUseCase.Database;
 using System.IO.Pipelines;
-using System.Net.Sockets;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.Json;
 
