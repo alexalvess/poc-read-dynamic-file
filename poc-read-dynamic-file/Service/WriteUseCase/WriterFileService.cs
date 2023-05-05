@@ -15,10 +15,11 @@ public class WriterFileService : IDisposable
 {
     private const string path = "C:\\src\\github\\poc-read-dynamic-file\\.assets\\sample-writer-file-{0}-new.txt";
 
+    private readonly RepositoryDatabase _repository;
 
     public WriterFileService()
     {
-
+        _repository = new RepositoryDatabase();
     }
 
     [Benchmark]
