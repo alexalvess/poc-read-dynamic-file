@@ -30,8 +30,8 @@ public class WriterFileService : IDisposable
             Mode = FileMode.OpenOrCreate,
         });
 
-        foreach (var user in await _repository.RecoverDataWithPipelineAsync())
-            await streamWriter.WriteLineAsync(JsonSerializer.Serialize(user));
+        //foreach (var user in await _repository.RecoverDataWithPipelineAsync())
+        //    await streamWriter.WriteLineAsync(JsonSerializer.Serialize(user));
     }
 
     [Benchmark]
@@ -45,19 +45,19 @@ public class WriterFileService : IDisposable
         using FileStream stream = new(string.Format(path, "pipeline-write"), FileMode.OpenOrCreate, FileAccess.Write);
         var writer = PipeWriter.Create(stream);
 
-        foreach (var user in await _repository.RecoverDataWithPipelineAsync())
-        {
-            Memory<byte> memory = writer.GetMemory(minimumBufferSize);
-            try
-            {
-                await writer.WriteAsync(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(user)));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                break;
-            }
-        }
+        //foreach (var user in await _repository.RecoverDataWithPipelineAsync())
+        //{
+        //    Memory<byte> memory = writer.GetMemory(minimumBufferSize);
+        //    try
+        //    {
+        //        await writer.WriteAsync(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(user)));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.ToString());
+        //        break;
+        //    }
+        //}
 
         await writer.CompleteAsync();
     }
@@ -73,21 +73,21 @@ public class WriterFileService : IDisposable
         using FileStream stream = new(string.Format(path, "pipeline-advance"), FileMode.OpenOrCreate, FileAccess.Write);
         var writer = PipeWriter.Create(stream);
 
-        foreach (var user in await _repository.RecoverDataWithPipelineAsync())
-        {
-            Memory<byte> memory = writer.GetMemory(minimumBufferSize);
-            try
-            {
-                writer.Advance(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(user), memory.Span));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                break;
-            }
+        //foreach (var user in await _repository.RecoverDataWithPipelineAsync())
+        //{
+        //    Memory<byte> memory = writer.GetMemory(minimumBufferSize);
+        //    try
+        //    {
+        //        writer.Advance(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(user), memory.Span));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.ToString());
+        //        break;
+        //    }
 
-            await writer.FlushAsync();
-        }
+        //    await writer.FlushAsync();
+        //}
 
         await writer.CompleteAsync();
     }

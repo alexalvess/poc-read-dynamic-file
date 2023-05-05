@@ -16,21 +16,23 @@ public class RepositoryDatabase : IDisposable
     }
 
     [Benchmark]
-    public async Task<IEnumerable<UserModel>> RecoverDataWithPipelineAsync()
+    public async Task RecoverDataWithPipelineAsync()
     {
         var command = new CommandDefinition(@"SELECT * FROM [pocFile].[dbo].[User]", flags: CommandFlags.Pipelined);
-        return await _dbContext.Connection.QueryAsync<UserModel>(command);
+        var temp = await _dbContext.Connection.QueryAsync<UserModel>(command);
     }
 
     [Benchmark]
-    public async Task<IEnumerable<UserModel>> RecoverDataAsync()
-        => await _dbContext.Connection.QueryAsync<UserModel>(
-            sql: @"SELECT * FROM [pocFile].[dbo].[User]", new[] { typeof(UserModel) }, default, buffered: false);
+    public async Task RecoverDataAsync()
+    {
+        var command = new CommandDefinition(@"SELECT * FROM [pocFile].[dbo].[User]", flags: CommandFlags.None);
+        var temp = await _dbContext.Connection.QueryAsync<UserModel>(command);
+    }
 
     [Benchmark]
-    public IEnumerable<UserModel> RecoverData()
+    public void RecoverData()
         => _dbContext.Connection.Query<UserModel>(
-            sql: @"SELECT * FROM [pocFile].[dbo].[User]", buffered: false);
+            sql: @"SELECT * FROM [pocFile].[dbo].[User]", buffered: false).Select(s => s);
 
     public void Dispose()
     {

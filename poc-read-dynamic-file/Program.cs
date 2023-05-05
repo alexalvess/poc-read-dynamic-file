@@ -16,9 +16,15 @@ BenchmarkRunner.Run<RepositoryDatabase>();
 //using var seed = new Seed();
 //await seed.DataSeedAsync();
 
-using var service = new WriterFileService();
-await service.WithPipelineAsync();
-await service.WithStreamAsync();
+using var repository = new RepositoryDatabase();
+repository.RecoverData();
+await repository.RecoverDataAsync();
+await repository.RecoverDataWithPipelineAsync();
+
+//using var service = new WriterFileService();
+//await service.WithPipelineWriteAsync();
+//await service.WithPipelineAdvanceAsync();
+//await service.WithStreamAsync();
 
 //await new MapWithSeparatorFileService().SeparatorWithStreamReaderAsync();
 //await new MapWithSeparatorFileService().SeparatorWithPipeReaderAsync();
