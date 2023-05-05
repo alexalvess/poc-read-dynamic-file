@@ -98,6 +98,6 @@ public class WriterFileService : IDisposable
 
     public void Dispose()
     {
-        _dbContext.Dispose();
+        _repository.Dispose();
     }
 }
