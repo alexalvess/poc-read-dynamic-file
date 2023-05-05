@@ -2,6 +2,7 @@
 using Bogus.DataSets;
 using Dapper;
 using poc_read_dynamic_file.Models;
+using System.Globalization;
 
 namespace poc_read_dynamic_file.Service.WriteUseCase.Database;
 
@@ -60,27 +61,52 @@ public class Seed : IDisposable
 				,@PaymentDate
 				,@PaymentValue)";
 
-		var users = new Faker<UserModel>()
+		var users = new Faker<UserModel>("pt_BR")
 			.CustomInstantiator(faker => new UserModel(
-				name: faker.Name.FullName(),
+				name: faker.Name.FirstName(),
 				email: faker.Internet.Email(),
-				productCode: faker.Random.Int(),
+				productCode: faker.Random.Int(1, 9999),
 				paymentDate: faker.Date.Future(),
 				paymentValue: faker.Random.Decimal()))
 			.Generate(500_000);
 
-		foreach (var user in users)
-		{
-            await _dbContext.Connection.ExecuteAsync(INSERT_SQL, new
-            {
-                user.Name,
-                user.Email,
-                user.ProductCode,
-                user.PaymentDate,
-                user.PaymentValue
-            });
-        }
+		foreach (var sql in GetSqlsInBatches(users))
+			await _dbContext.Connection.ExecuteAsync(sql);
 	}
+
+    private IList<string> GetSqlsInBatches(IList<UserModel> users)
+    {
+        var insertSql = @"USE [pocFile];
+			INSERT INTO [dbo].[User]
+				([Name]
+				,[Email]
+				,[ProductCode]
+				,[PaymentDate]
+				,[PaymentValue]) VALUES ";
+        var valuesSql =@"(
+				'{0}'
+				,'{1}'
+				,{2}
+				,'{3}'
+				,{4})";
+        var batchSize = 10_000;
+
+        var sqlsToExecute = new List<string>();
+        var numberOfBatches = (int)Math.Ceiling((double)users.Count / batchSize);
+
+        CultureInfo ci = new CultureInfo("en-US");
+        Thread.CurrentThread.CurrentCulture = ci;
+        Thread.CurrentThread.CurrentUICulture = ci;
+
+        for (int i = 0; i < numberOfBatches; i++)
+        {
+            var userToInsert = users.Skip(i * batchSize).Take(batchSize);
+            var valuesToInsert = userToInsert.Select(u => string.Format(valuesSql, u.Name, u.Email, u.ProductCode, u.PaymentDate, u.PaymentValue));
+            sqlsToExecute.Add(insertSql + string.Join(',', valuesToInsert));
+        }
+
+        return sqlsToExecute;
+    }
 
     public void Dispose()
     {

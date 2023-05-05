@@ -13,13 +13,8 @@ BenchmarkRunner.Run<RepositoryDatabase>();
 
 #else
 
-//using var seed = new Seed();
-//await seed.DataSeedAsync();
-
-using var repository = new RepositoryDatabase();
-repository.RecoverData();
-await repository.RecoverDataAsync();
-await repository.RecoverDataWithPipelineAsync();
+using var seed = new Seed();
+await seed.DataSeedAsync();
 
 //using var service = new WriterFileService();
 //await service.WithPipelineWriteAsync();

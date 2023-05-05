@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Engines;
 using Dapper;
 using poc_read_dynamic_file.Models;
 using System.Data;
@@ -15,24 +16,33 @@ public class RepositoryDatabase : IDisposable
         _dbContext= new DbContext();
     }
 
-    [Benchmark]
+    public IEnumerable<UserModel> Users { get; private set; }
+
+    [Benchmark(Description = "Recover data with async way and Pipelined Flag")]
     public async Task RecoverDataWithPipelineAsync()
     {
         var command = new CommandDefinition(@"SELECT * FROM [pocFile].[dbo].[User]", flags: CommandFlags.Pipelined);
-        var temp = await _dbContext.Connection.QueryAsync<UserModel>(command);
+        Users = await _dbContext.Connection.QueryAsync<UserModel>(command);
     }
 
-    [Benchmark]
+    [Benchmark(Description = "Recover data with async way and none Flag")]
     public async Task RecoverDataAsync()
     {
         var command = new CommandDefinition(@"SELECT * FROM [pocFile].[dbo].[User]", flags: CommandFlags.None);
-        var temp = await _dbContext.Connection.QueryAsync<UserModel>(command);
+        Users = await _dbContext.Connection.QueryAsync<UserModel>(command);
     }
 
-    [Benchmark]
+    [Benchmark(Description = "Recover data with sync way and none buffered")]
     public void RecoverData()
-        => _dbContext.Connection.Query<UserModel>(
-            sql: @"SELECT * FROM [pocFile].[dbo].[User]", buffered: false).Select(s => s);
+        => Users = _dbContext.Connection.Query<UserModel>(
+            sql: @"SELECT * FROM [pocFile].[dbo].[User]", buffered: false)
+        .Select(s => s);
+
+    [Benchmark(Description = "Recover data with sync way and buffered")]
+    public void RecoverDataWithBuffered()
+        => Users = _dbContext.Connection.Query<UserModel>(
+            sql: @"SELECT * FROM [pocFile].[dbo].[User]")
+        .Select(s => s);
 
     public void Dispose()
     {
