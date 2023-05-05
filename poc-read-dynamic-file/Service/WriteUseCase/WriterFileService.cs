@@ -96,15 +96,6 @@ public class WriterFileService : IDisposable
         await writer.CompleteAsync();
     }
 
-    public Task<IEnumerable<UserModel>> RecoverDataWithPipelineAsync()
-    {
-        var command = new CommandDefinition(@"SELECT * FROM [pocFile].[dbo].[User]", flags: CommandFlags.Pipelined);
-        return _dbContext.Connection.QueryAsync<UserModel>(command);
-    }
-
-    public Task<IEnumerable<UserModel>> RecoverDataAsync()
-        => _dbContext.Connection.QueryAsync<UserModel>(@"SELECT * FROM [pocFile].[dbo].[User]");
-
     public void Dispose()
     {
         _dbContext.Dispose();

@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using poc_read_dynamic_file.Models;
+using System.Data;
 
 namespace poc_read_dynamic_file.Service.WriteUseCase.Database;
 
