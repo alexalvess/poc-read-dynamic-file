@@ -34,7 +34,7 @@ public class WriterFileService : IDisposable
             Mode = FileMode.OpenOrCreate,
         });
 
-        foreach (var user in await RecoverDataWithPipelineAsync())
+        foreach (var user in await _repository.RecoverDataWithPipelineAsync())
             await streamWriter.WriteLineAsync(JsonSerializer.Serialize(user));
     }
 
@@ -49,7 +49,7 @@ public class WriterFileService : IDisposable
         using FileStream stream = new(string.Format(path, "pipeline-write"), FileMode.OpenOrCreate, FileAccess.Write);
         var writer = PipeWriter.Create(stream);
 
-        foreach (var user in await RecoverDataWithPipelineAsync())
+        foreach (var user in await _repository.RecoverDataWithPipelineAsync())
         {
             Memory<byte> memory = writer.GetMemory(minimumBufferSize);
             try
@@ -77,7 +77,7 @@ public class WriterFileService : IDisposable
         using FileStream stream = new(string.Format(path, "pipeline-advance"), FileMode.OpenOrCreate, FileAccess.Write);
         var writer = PipeWriter.Create(stream);
 
-        foreach (var user in await RecoverDataWithPipelineAsync())
+        foreach (var user in await _repository.RecoverDataWithPipelineAsync())
         {
             Memory<byte> memory = writer.GetMemory(minimumBufferSize);
             try
