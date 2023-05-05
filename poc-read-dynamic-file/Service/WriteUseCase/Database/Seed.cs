@@ -67,7 +67,7 @@ public class Seed : IDisposable
 				productCode: faker.Random.Int(),
 				paymentDate: faker.Date.Future(),
 				paymentValue: faker.Random.Decimal()))
-			.Generate(1_000_000);
+			.Generate(500_000);
 
 		foreach (var user in users)
 		{

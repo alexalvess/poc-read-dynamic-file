@@ -4,6 +4,11 @@ namespace poc_read_dynamic_file.Models;
 
 public class UserModel
 {
+    public UserModel()
+    {
+
+    }
+
     public UserModel(string name, string email, int productCode, DateTime paymentDate, decimal paymentValue)
     {
         Name = name;
