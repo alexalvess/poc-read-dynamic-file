@@ -13,14 +13,14 @@ public class RepositoryDatabase : IDisposable
         _dbContext= new DbContext();
     }
 
-    public Task<IEnumerable<UserModel>> RecoverDataWithPipelineAsync()
+    public async Task<IEnumerable<UserModel>> RecoverDataWithPipelineAsync()
     {
         var command = new CommandDefinition(@"SELECT * FROM [pocFile].[dbo].[User]", flags: CommandFlags.Pipelined);
-        return _dbContext.Connection.QueryAsync<UserModel>(command);
+        return await _dbContext.Connection.QueryAsync<UserModel>(command);
     }
 
-    public Task<IEnumerable<UserModel>> RecoverDataAsync()
-        => _dbContext.Connection.QueryAsync<UserModel>(
+    public async Task<IEnumerable<UserModel>> RecoverDataAsync()
+        => await _dbContext.Connection.QueryAsync<UserModel>(
             sql: @"SELECT * FROM [pocFile].[dbo].[User]", new[] { typeof(UserModel) }, default, buffered: false);
 
     public IEnumerable<UserModel> RecoverData()
