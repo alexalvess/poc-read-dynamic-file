@@ -1,4 +1,7 @@
-﻿namespace poc_read_dynamic_file.Service.WriteUseCase.Database;
+﻿using Dapper;
+using poc_read_dynamic_file.Models;
+
+namespace poc_read_dynamic_file.Service.WriteUseCase.Database;
 
 public class RepositoryDatabase : IDisposable
 {
@@ -8,6 +11,9 @@ public class RepositoryDatabase : IDisposable
     {
         _dbContext= new DbContext();
     }
+
+    public Task<IEnumerable<UserModel>> RecoverDataAsync()
+        => _dbContext.Connection.QueryAsync<UserModel>(@"SELECT * FROM [pocFile].[dbo].[User]", buffered: false);
 
     public void Dispose()
     {
