@@ -12,8 +12,9 @@ public class RepositoryDatabase : IDisposable
         _dbContext= new DbContext();
     }
 
-    public Task<IEnumerable<UserModel>> RecoverDataAsync()
-        => _dbContext.Connection.QueryAsync<UserModel>(@"SELECT * FROM [pocFile].[dbo].[User]", buffered: false);
+    public Task<IEnumerable<UserModel>> RecoverData()
+        => _dbContext.Connection.QueryAsync<UserModel>(
+            sql: @"SELECT * FROM [pocFile].[dbo].[User]", new[] { typeof(UserModel) }, default, buffered: false);
 
     public void Dispose()
     {
