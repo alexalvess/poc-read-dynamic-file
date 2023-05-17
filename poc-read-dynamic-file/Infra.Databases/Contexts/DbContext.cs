@@ -1,15 +1,14 @@
-﻿using System.Data;
+﻿using Microsoft.Extensions.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace poc_read_dynamic_file.Infra.Databases.Contexts;
 
-public class DbContext : IDisposable
+public class DbContext : IDbContext
 {
-    private const string connectionString = "Server=127.0.0.1;User Id=postgres;Password=postgres;";
-
-    public DbContext()
+    public DbContext(IConfiguration configuration)
     {
-        Connection = new SqlConnection(connectionString);
+        Connection = new SqlConnection(configuration.GetConnectionString("Postgres"));
         Connection.Open();
     }
 

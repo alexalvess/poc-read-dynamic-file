@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
-using poc_read_dynamic_file.Extensions;
 using poc_read_dynamic_file.Models;
 using poc_read_dynamic_file.Options;
+using poc_read_dynamic_file.Service.Extensions;
 
 namespace poc_read_dynamic_file.Service.ReadUseCase;
 

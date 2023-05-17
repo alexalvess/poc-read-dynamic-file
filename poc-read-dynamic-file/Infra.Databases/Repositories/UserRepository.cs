@@ -8,9 +8,9 @@ namespace poc_read_dynamic_file.Infra.Databases.Repositories;
 
 public class UserRepository
 {
-    private readonly DbContext _dbContext;
+    private readonly IDbContext _dbContext;
 
-    public UserRepository(DbContext dbContext)
+    public UserRepository(IDbContext dbContext)
         => _dbContext = dbContext;
 
     public Task UpsertAsync(UserModel user)
