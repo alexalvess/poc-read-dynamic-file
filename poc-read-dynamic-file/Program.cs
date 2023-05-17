@@ -7,7 +7,7 @@ using poc_read_dynamic_file.Service.ReadUseCase;
 //BenchmarkRunner.Run<MapWithPositionsFileService>();
 
 //BenchmarkRunner.Run<WriterFileService>();
-BenchmarkRunner.Run<RepositoryDatabase>();
+BenchmarkRunner.Run<UserRepository>();
 
 #else
 
