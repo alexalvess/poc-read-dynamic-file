@@ -1,11 +1,11 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 
-namespace poc_read_dynamic_file.Service.WriteUseCase.Database;
+namespace poc_read_dynamic_file.Infra.Databases.Contexts;
 
 public class DbContext : IDisposable
 {
-    private const string connectionString = "Server=127.0.0.1;User Id=sa;Password=myPassword!;";
+    private const string connectionString = "Server=127.0.0.1;User Id=postgres;Password=postgres;";
 
     public DbContext()
     {
@@ -17,7 +17,7 @@ public class DbContext : IDisposable
 
     public void Dispose()
     {
-        if(Connection.State != ConnectionState.Closed)
+        if (Connection.State != ConnectionState.Closed)
             Connection.Close();
 
         Connection.Dispose();

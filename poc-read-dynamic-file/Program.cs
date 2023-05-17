@@ -1,11 +1,11 @@
 ﻿using BenchmarkDotNet.Running;
+using poc_read_dynamic_file.Infra.Databases.Repositories;
 using poc_read_dynamic_file.Service.ReadUseCase;
 using poc_read_dynamic_file.Service.WriteUseCase;
-using poc_read_dynamic_file.Service.WriteUseCase.Database;
 
 #if RELEASE
 
-//BenchmarkRunner.Run<MapWithSeparatorFileService>();
+BenchmarkRunner.Run<MapWithSeparatorFileService>(;
 //BenchmarkRunner.Run<MapWithPositionsFileService>();
 
 //BenchmarkRunner.Run<WriterFileService>();

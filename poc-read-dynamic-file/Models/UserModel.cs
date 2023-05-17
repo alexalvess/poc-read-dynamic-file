@@ -16,6 +16,8 @@ public class UserModel
         ProductCode = productCode;
         PaymentDate = paymentDate;
         PaymentValue = paymentValue;
+
+        ValuesSQL = string.Format("('{0}','{1}',{2},'{3}',{4})", name, email, productCode, paymentDate, paymentValue);
     }
 
     public UserModel(string[] fields, IDictionary<string, int> headers, ColumnFileOption<string> option)
@@ -45,4 +47,6 @@ public class UserModel
     public DateTime PaymentDate { get; init; }
 
     public decimal PaymentValue { get; init; }
+
+    public string ValuesSQL { get; }
 }
