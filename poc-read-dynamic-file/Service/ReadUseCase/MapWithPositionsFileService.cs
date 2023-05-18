@@ -31,6 +31,7 @@ public class MapWithPositionsFileService
     public async Task PositionsWithStreamReaderAsync(bool sendToMessageBus = false)
     {
         using FileStream stream = new(_filePathOption.PositionFilePath, FileMode.Open, FileAccess.Read);
+        List<UserModel> users = new();
 
         await _service.StreamReaderAsync(
             stream: stream,
@@ -39,16 +40,22 @@ public class MapWithPositionsFileService
                 UserModel user = new(line, _columnFileOption);
 
                 if(sendToMessageBus)
-                    return _publishEndpoint.Publish(user, typeof(UserModel));
+                {
+                    users.Add(user);
+                    return Task.CompletedTask;
+                }
 
                 return _repository.UpsertAsync(user);
             },
             cancellationToken: default);
+
+        await Task.WhenAll(users.Select(user => _publishEndpoint.Publish(user, typeof(UserModel))));
     }
 
     public async Task PositionsWithPipeReaderAsync(bool sendToMessageBus = false)
     {
         using FileStream stream = new(_filePathOption.PositionFilePath, FileMode.Open, FileAccess.Read);
+        List<UserModel> users = new();
 
         await _service.PipeReaderAsync(
             stream: stream,
@@ -57,10 +64,15 @@ public class MapWithPositionsFileService
                 UserModel user = new(line, _columnFileOption);
                 
                 if (sendToMessageBus)
-                    return _publishEndpoint.Publish(user, typeof(UserModel));
+                {
+                    users.Add(user);
+                    return Task.CompletedTask;
+                }
 
                 return _repository.UpsertAsync(user);
             },
             cancellationToken: default);
+
+        await Task.WhenAll(users.Select(user => _publishEndpoint.Publish(user, typeof(UserModel))));
     }
 }
