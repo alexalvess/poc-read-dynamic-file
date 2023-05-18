@@ -33,7 +33,7 @@ public class MapWithPositionsFileService
             proccessLine: line =>
             {
                 UserModel user = new(line, _columnFileOption);
-                return _repository.UpsertAsync(user);
+                return Task.CompletedTask;
             },
             cancellationToken: default);
     }
@@ -47,7 +47,7 @@ public class MapWithPositionsFileService
             proccessLine: line =>
             {
                 UserModel user = new(line, _columnFileOption);
-                return _repository.UpsertAsync(user);
+                return Task.CompletedTask;
             },
             cancellationToken: default);
     }

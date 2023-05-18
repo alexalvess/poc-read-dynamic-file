@@ -76,3 +76,31 @@ Steps: Read the file, parse the data, and save it in the database.
         </tbody>
     </table>
 </details>
+
+<details>
+<summary>100 Lines - 7 KB</summary>
+    <table>
+        <thead>
+            <tr>
+        	    <th>Strategy</th>
+                <th>Mean</th>
+                <th>Error</th>
+                <th>Op/s</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Stream</td>
+                <td>375.8 ms</td>
+                <td>NA</td>
+                <td>2.661</td>
+            </tr>
+            <tr style="background: #bfffcb">
+                <td>Pipe</td>
+                <td>362.5 ms</td>
+                <td>NA</td>
+                <td>2.759</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
