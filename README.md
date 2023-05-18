@@ -104,3 +104,115 @@ Steps: Read the file, parse the data, and save it in the database.
         </tbody>
     </table>
 </details>
+
+<details>
+<summary>1.000 Lines - 66 KB</summary>
+    <table>
+        <thead>
+            <tr>
+        	    <th>Strategy</th>
+                <th>Mean</th>
+                <th>Error</th>
+                <th>Op/s</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Stream</td>
+                <td>1.575 s</td>
+                <td>NA</td>
+                <td>0.6350</td>
+            </tr>
+            <tr style="background: #bfffcb">
+                <td>Pipe</td>
+                <td>1.499 s</td>
+                <td>NA</td>
+                <td>0.6671</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+<summary>10.000 Lines - 655 KB</summary>
+    <table>
+        <thead>
+            <tr>
+        	    <th>Strategy</th>
+                <th>Mean</th>
+                <th>Error</th>
+                <th>Op/s</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Stream</td>
+                <td>13.01 s</td>
+                <td>NA</td>
+                <td>0.0769</td>
+            </tr>
+            <tr style="background: #bfffcb">
+                <td>Pipe</td>
+                <td>12.62 s</td>
+                <td>NA</td>
+                <td>0.0793</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+<summary>100.000 Lines - 6.543 KB</summary>
+    <table>
+        <thead>
+            <tr>
+        	    <th>Strategy</th>
+                <th>Mean</th>
+                <th>Error</th>
+                <th>Op/s</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background: #bfffcb">
+                <td>Stream</td>
+                <td>125.2 s</td>
+                <td>NA</td>
+                <td>0.0080</td>
+            </tr>
+            <tr>
+                <td>Pipe</td>
+                <td>148.7 s</td>
+                <td>NA</td>
+                <td>0.0067</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+<summary>1.000.000 Lines - 65.430 KB</summary>
+    <table>
+        <thead>
+            <tr>
+        	    <th>Strategy</th>
+                <th>Mean</th>
+                <th>Error</th>
+                <th>Op/s</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Stream</td>
+                <td>22.48 m</td>
+                <td>NA</td>
+                <td>0.0007</td>
+            </tr>
+            <tr>
+                <td>Pipe</td>
+                <td>24.13 m</td>
+                <td>NA</td>
+                <td>0.0007</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
