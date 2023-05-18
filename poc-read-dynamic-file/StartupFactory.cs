@@ -8,8 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using poc_read_dynamic_file.Infra.Databases.Contexts;
 using poc_read_dynamic_file.Infra.Databases.Repositories;
+using poc_read_dynamic_file.Models;
 using poc_read_dynamic_file.Options;
+using poc_read_dynamic_file.Service.Extensions;
 using poc_read_dynamic_file.Service.ReadUseCase;
+using System.Reflection;
 
 namespace poc_read_dynamic_file;
 
@@ -51,11 +54,12 @@ public class StartupFactory
         serviceCollections
             .AddMassTransit(cfg =>
             {
+                cfg.SetKebabCaseEndpointNameFormatter();
+                cfg.AddConsumers(Assembly.GetExecutingAssembly());
+
                 cfg.UsingRabbitMq((context, bus) =>
                 {
                     bus.Host(_configuration.GetConnectionString("MessageBus"));
-
-                    bus.ConfigureEventReceiveEndpoints(context);
                     bus.ConfigureEndpoints(context);
                 });
             });
@@ -63,19 +67,17 @@ public class StartupFactory
         _serviceProvider = serviceCollections.BuildServiceProvider();
     }
 
-
-
     [Benchmark]
     public async Task ReadFileWithStreamAsync()
     {
         var service = _serviceProvider.GetRequiredService<MapWithPositionsFileService>();
-        await service.PositionsWithStreamReaderAsync();
+        await service.PositionsWithStreamReaderAsync(true);
     }
 
     [Benchmark]
     public async Task ReadFileWithPipeAsync()
     {
         var service = _serviceProvider.GetRequiredService<MapWithPositionsFileService>();
-        await service.PositionsWithPipeReaderAsync();
+        await service.PositionsWithPipeReaderAsync(true);
     }
 }

@@ -8,6 +8,6 @@ BenchmarkRunner.Run<StartupFactory>();
 #else
 
 var factory = new StartupFactory();
-await factory.ReadFileWithPipeAsync();
+await factory.ReadFileWithStreamAsync();
 
 #endif
