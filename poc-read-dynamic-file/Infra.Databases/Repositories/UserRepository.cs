@@ -16,19 +16,19 @@ public class UserRepository
     public Task UpsertAsync(UserModel user)
     {
         var sql = @"
-            INSERT INTO User (
-                [Name]
-				,[Email]
-				,[ProductCode]
-				,[PaymentDate]
-				,[PaymentValue])
+            INSERT INTO users (
+                name
+				,email
+				,productcode
+				,paymentdate
+				,paymentvalue)
             VALUES(
                 @Name
 				,@Email
 				,@ProductCode
 				,@PaymentDate
 				,@PaymentValue) 
-            ON CONFLICT ON CONSTRAINT users_id_key
+            ON CONFLICT ON CONSTRAINT users_pkey
             DO NOTHING;";
 
         var command = new CommandDefinition(sql, new

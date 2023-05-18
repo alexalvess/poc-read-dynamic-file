@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Npgsql;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -8,7 +9,7 @@ public class DbContext : IDbContext
 {
     public DbContext(IConfiguration configuration)
     {
-        Connection = new SqlConnection(configuration.GetConnectionString("Postgres"));
+        Connection = new NpgsqlConnection(configuration.GetConnectionString("Postgres"));
         Connection.Open();
     }
 

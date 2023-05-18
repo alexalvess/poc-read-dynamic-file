@@ -1,4 +1,8 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Columns;
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Diagnosers;
+using BenchmarkDotNet.Engines;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using poc_read_dynamic_file.Infra.Databases.Contexts;
@@ -8,14 +12,14 @@ using poc_read_dynamic_file.Service.ReadUseCase;
 
 namespace poc_read_dynamic_file;
 
-[MemoryDiagnoser]
+[SimpleJob(RunStrategy.ColdStart, iterationCount: 1)]
+[AllStatisticsColumn]
 public class StartupFactory
 {
-    private IConfiguration _configuration;
-    private IServiceProvider _serviceProvider;
+    private readonly IConfiguration _configuration;
+    private readonly IServiceProvider _serviceProvider;
 
-    [GlobalSetup]
-    public void ConfigureServices()
+    public StartupFactory()
     {
         _configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
@@ -39,15 +43,26 @@ public class StartupFactory
             .AddScoped<IDbContext, DbContext>()
             .AddScoped<UserRepository>()
             .AddScoped<ReadFileService>()
-            .AddScoped<MapWithPositionsFileService>();
+            .AddScoped<MapWithPositionsFileService>()
+            .AddScoped<MapWithSeparatorFileService>()
+            .AddScoped(_ => _configuration);
 
         _serviceProvider = serviceCollections.BuildServiceProvider();
     }
 
+
+
     [Benchmark]
-    public async Task ReadPositionFileWithStreamAsync()
+    public async Task ReadFileWithStreamAsync()
     {
         var service = _serviceProvider.GetRequiredService<MapWithPositionsFileService>();
         await service.PositionsWithStreamReaderAsync();
+    }
+
+    [Benchmark]
+    public async Task ReadFileWithPipeAsync()
+    {
+        var service = _serviceProvider.GetRequiredService<MapWithPositionsFileService>();
+        await service.PositionsWithPipeReaderAsync();
     }
 }
