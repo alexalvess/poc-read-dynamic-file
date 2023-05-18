@@ -50,9 +50,7 @@ _PS: For this example, we show the benchmark references about position strategy_
 Steps: Read the file, parse the data, and save it in the database.
 
 <details>
-
-    <summary>10 Lines - 1 KB</summary>
-
+<summary>10 Lines - 1 KB</summary>
     <table>
         <thead>
             <tr>
@@ -77,5 +75,4 @@ Steps: Read the file, parse the data, and save it in the database.
             </tr>
         </tbody>
     </table>
-
 </details>
