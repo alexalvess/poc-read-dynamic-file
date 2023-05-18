@@ -67,7 +67,7 @@ Steps: Read the file, parse the data, and save it in the database.
                 <td>NA</td>
                 <td>3.635</td>
             </tr>
-            <tr style="background: #bfffcb">
+            <tr>
                 <td>Pipe</td>
                 <td>259.6 ms</td>
                 <td>NA</td>
@@ -95,7 +95,7 @@ Steps: Read the file, parse the data, and save it in the database.
                 <td>NA</td>
                 <td>2.661</td>
             </tr>
-            <tr style="background: #bfffcb">
+            <tr>
                 <td>Pipe</td>
                 <td>362.5 ms</td>
                 <td>NA</td>
@@ -123,7 +123,7 @@ Steps: Read the file, parse the data, and save it in the database.
                 <td>NA</td>
                 <td>0.6350</td>
             </tr>
-            <tr style="background: #bfffcb">
+            <tr>
                 <td>Pipe</td>
                 <td>1.499 s</td>
                 <td>NA</td>
@@ -151,7 +151,7 @@ Steps: Read the file, parse the data, and save it in the database.
                 <td>NA</td>
                 <td>0.0769</td>
             </tr>
-            <tr style="background: #bfffcb">
+            <tr>
                 <td>Pipe</td>
                 <td>12.62 s</td>
                 <td>NA</td>
@@ -173,7 +173,7 @@ Steps: Read the file, parse the data, and save it in the database.
             </tr>
         </thead>
         <tbody>
-            <tr style="background: #bfffcb">
+            <tr>
                 <td>Stream</td>
                 <td>125.2 s</td>
                 <td>NA</td>
