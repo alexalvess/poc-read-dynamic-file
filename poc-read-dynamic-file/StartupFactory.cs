@@ -3,6 +3,7 @@ using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Engines;
+using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using poc_read_dynamic_file.Infra.Databases.Contexts;
@@ -46,6 +47,18 @@ public class StartupFactory
             .AddScoped<MapWithPositionsFileService>()
             .AddScoped<MapWithSeparatorFileService>()
             .AddScoped(_ => _configuration);
+
+        serviceCollections
+            .AddMassTransit(cfg =>
+            {
+                cfg.UsingRabbitMq((context, bus) =>
+                {
+                    bus.Host(_configuration.GetConnectionString("MessageBus"));
+
+                    bus.ConfigureEventReceiveEndpoints(context);
+                    bus.ConfigureEndpoints(context);
+                });
+            });
 
         _serviceProvider = serviceCollections.BuildServiceProvider();
     }
