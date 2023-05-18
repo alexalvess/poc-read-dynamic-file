@@ -47,31 +47,35 @@ _PS: For this example, we show the benchmark references about position strategy_
 
 **About benchmark:**
 
-<table>
-    <thead>
-    	<tr>
-            <th colspan=4>100 Lines (7 KB)</th>
-        </tr>
-        <tr>
-        	<th>Strategy</th>
-            <th>Mean</th>
-            <th>Error</th>
-            <th>Op/s</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Stream</td>
-            <td>231.1 ms</td>
-            <td>NA</td>
-            <td>4.328</td>
-        </tr>
-        <tr>
-            <td>Pipe</td>
-            <td>224.4 ms</td>
-            <td>NA</td>
-            <td>4.456</td>
-        </tr>
-    </tbody>
-</table>
+Steps: Read the file, parse the data, and save it in the database.
 
+<details>
+
+    <summary>10 Lines - 1 KB</summary>
+
+    <table>
+        <thead>
+            <tr>
+        	    <th>Strategy</th>
+                <th>Mean</th>
+                <th>Error</th>
+                <th>Op/s</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Stream</td>
+                <td>275.1 ms</td>
+                <td>NA</td>
+                <td>3.635</td>
+            </tr>
+            <tr style="background: #bfffcb">
+                <td>Pipe</td>
+                <td>259.6 ms</td>
+                <td>NA</td>
+                <td>3.852</td>
+            </tr>
+        </tbody>
+    </table>
+
+</details>
